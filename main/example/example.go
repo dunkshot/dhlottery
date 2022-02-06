@@ -39,9 +39,14 @@ func getPages(baseURL string) int {
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	checkErr(err)
 
-	doc.Find(".pagination-list").Each(func(i int, s *goquery.Selection) {
+	aa := doc.Find("#userId").Each(func(i int, s *goquery.Selection) {
+		fmt.Println(i)
+		fmt.Println(goquery.NodeName(s))
 		pages = s.Find("li").Length()
 	})
+	if aa != nil {
+		fmt.Println(aa)
+	}
 
 	return pages
 }
@@ -115,20 +120,20 @@ func writeJobs(jobs []Indeed) {
 }
 
 func main() {
-	var jobs []Indeed
-	var baseURL string = "https://kr.indeed.com/jobs?q=%EA%B0%9C%EB%B0%9C%EC%9E%90&l=%EC%84%9C%EC%9A%B8&vjk=cf829516c1e80398"
-	c1 := make(chan []Indeed)
+	// var jobs []Indeed
+	var baseURL string = "https://dhlottery.co.kr/user.do?method=login&returnUrl=/gameInfo.do?method=buyLotto"
+	// c1 := make(chan []Indeed)
 	TotalPage := getPages(baseURL)
 	fmt.Println("TotalPage...", TotalPage)
 
-	for i := 0; i < TotalPage; i++ {
-		go getCard(i, baseURL, c1)
-	}
+	// for i := 0; i < TotalPage; i++ {
+	// 	go getCard(i, baseURL, c1)
+	// }
 
-	for i := 0; i < TotalPage; i++ {
-		extractJobs := <-c1
-		jobs = append(jobs, extractJobs...)
-	}
-	writeJobs(jobs)
-	fmt.Println("Done")
+	// for i := 0; i < TotalPage; i++ {
+	// 	extractJobs := <-c1
+	// 	jobs = append(jobs, extractJobs...)
+	// }
+	// writeJobs(jobs)
+	// fmt.Println("Done")
 }
