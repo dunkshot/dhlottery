@@ -32,6 +32,7 @@ def handler(update, context):
 
 
 try:
+    print('Start msgHandler')
     echo_handler = MessageHandler(Filters.text, handler)
     dispatcher.add_handler(echo_handler)
 except Exception as e:

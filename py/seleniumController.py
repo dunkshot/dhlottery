@@ -27,7 +27,7 @@ def login(driver):
 
 # 예치금 충전
 def payment(money):
-    driver = webdriver.Chrome()
+    driver = init_driver()
     login(driver)
     driver.get(prefix + '/payment.do?method=payment')
     money_select = Select(driver.find_element(By.ID, 'Amt'))
@@ -44,7 +44,7 @@ def payment(money):
 
 # 예치금 조회
 def check_charge():
-    driver = webdriver.Chrome()
+    driver = init_driver()
     login(driver)
     driver.get(prefix + '/userSsl.do?method=myPage')
 
@@ -58,7 +58,7 @@ def check_charge():
 
 # 구매
 def buy():
-    driver = webdriver.Chrome()
+    driver = init_driver()
     login(driver)
     driver.find_element(By.XPATH, "//a[@href='javascript:void(0)']").click()
     driver.find_element(By.XPATH, "//a[@href='javascript:goLottoBuy(2);']").click()
@@ -99,7 +99,7 @@ def buy():
 
 
 def check_result():
-    driver = webdriver.Chrome()
+    driver = init_driver()
     login(driver)
     driver.get(prefix + '/myPage.do?method=lottoBuyListView')
 
@@ -126,3 +126,18 @@ def check_result():
 
     telegramSender.send(result_text)
     driver.quit()
+
+
+def init_driver():
+    is_headless = loadConfig.chrome_headless
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.headless = is_headless
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--remote-debugging-port=9222')
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.set_window_position(0, 0)
+    driver.set_window_size(1400, 900)
+
+    return driver
