@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 import telegramSender
 import loadConfig
+import logging
 
 prefix = loadConfig.url_prefix
 
@@ -67,7 +68,7 @@ def buy():
     # 창내 팝업 핸들링
     if driver.find_element(By.CLASS_NAME, 'popup_section').is_displayed():
         driver.find_element(By.CSS_SELECTOR, '#popAlert > div > div > div.content > div.btns_submit > a').click()
-        print(driver.find_element(By.CLASS_NAME, 'popup_section').text)
+        logging.info(driver.find_element(By.CLASS_NAME, 'popup_section').text)
 
     driver.switch_to.frame('ifrm_tab')
 
@@ -77,7 +78,7 @@ def buy():
     # 수량선택: 1
     driver.find_element(By.NAME, 'btnSelectNum').send_keys('1')
     driver.find_element(By.NAME, 'btnSelectNum').click()
-    print(driver.find_element(By.ID, 'payAmt').text)
+    logging.info(driver.find_element(By.ID, 'payAmt').text)
 
     # 구매하기: YES
     driver.find_element(By.NAME, 'btnBuy').click()

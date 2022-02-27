@@ -3,6 +3,7 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 import seleniumController
 import telegramSender
 import loadConfig
+import logging
 
 token = loadConfig.telegram_token
 
@@ -15,7 +16,7 @@ updater.start_polling()
 def handler(update, context):
     try:
         user_input = update.message.text.replace(' ', '')
-        print('input: ' + user_input)
+        logging.info('input: ' + user_input)
         telegramSender.send(user_input + ' 처리할게요. 😉')
         if user_input == '예치금충전':
             seleniumController.payment('5000')  # 5000 원
@@ -28,12 +29,13 @@ def handler(update, context):
         else:
             telegramSender.send('못알아듣겠어요^^🤖')
     except Exception as e:
-        telegramSender.send('😵에러발생\n' + str(e))
+        logging.error(telegramSender.send('😵에러발생\n' + str(e)))
 
 
 try:
-    print('Start msgHandler')
+    logging.basicConfig(filename='dhlottery.log', format='%(asctime)s %(levelname)7s %(message)s', level=logging.INFO)
+    logging.info('[dhlottery] Start msgHandler')
     echo_handler = MessageHandler(Filters.text, handler)
     dispatcher.add_handler(echo_handler)
 except Exception as e:
-    telegramSender.send('😭에러발생\n' + str(e))
+    logging.error(telegramSender.send('😭에러발생\n' + str(e)))

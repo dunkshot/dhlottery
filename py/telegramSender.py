@@ -11,16 +11,16 @@ For a description of the Bot API, see this page: https://core.telegram.org/bots/
 import telegram
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 import os
+import logging
 
 token = '5260793847:AAHQBZljoUiNTHAJ-y1orZHxO25U2KBPlKE'
 chat_id = 370311245
 
 
 def send(msg):
-    print("telegram sender done. : " + msg)
     bot = telegram.Bot(token=token)
     result = bot.sendMessage(chat_id=chat_id, text=msg)
-    print(result)
+    logging.info('telegram sender done. \n' + result)
 
 
 def send_img(img_name):
