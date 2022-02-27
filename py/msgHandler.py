@@ -32,10 +32,11 @@ def handler(update, context):
         logging.error(telegramSender.send('😵에러발생\n' + str(e)))
 
 
-try:
-    logging.basicConfig(filename='dhlottery.log', format='%(asctime)s %(levelname)7s %(message)s', level=logging.INFO)
-    logging.info('[dhlottery] Start msgHandler')
-    echo_handler = MessageHandler(Filters.text, handler)
-    dispatcher.add_handler(echo_handler)
-except Exception as e:
-    logging.error(telegramSender.send('😭에러발생\n' + str(e)))
+if __name__ == '__main__':
+    try:
+        logging.basicConfig(filename='dhlottery.log', format='%(asctime)s %(levelname)7s %(message)s', level=logging.INFO)
+        logging.info('[dhlottery] Start msgHandler')
+        echo_handler = MessageHandler(Filters.text, handler)
+        dispatcher.add_handler(echo_handler)
+    except Exception as e:
+        logging.error(telegramSender.send('😭에러발생\n' + str(e)))
