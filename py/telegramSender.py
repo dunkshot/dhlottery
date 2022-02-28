@@ -20,7 +20,7 @@ chat_id = 370311245
 def send(msg):
     bot = telegram.Bot(token=token)
     result = bot.sendMessage(chat_id=chat_id, text=msg)
-    logging.info('telegram sender done. \n' + result)
+    logging.info('telegram sender done. \n' + str(result))
 
 
 def send_img(img_name):
