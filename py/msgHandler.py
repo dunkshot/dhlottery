@@ -1,3 +1,5 @@
+import traceback
+
 import telegram
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 import seleniumController
@@ -29,7 +31,7 @@ def handler(update, context):
         else:
             telegramSender.send('못알아듣겠어요^^🤖')
     except Exception as e:
-        logging.error(e)
+        logging.error(traceback.format_exc())
         telegramSender.send('😵에러발생\n' + str(e))
 
 
@@ -40,5 +42,5 @@ if __name__ == '__main__':
         echo_handler = MessageHandler(Filters.text, handler)
         dispatcher.add_handler(echo_handler)
     except Exception as e:
-        logging.error(e)
+        logging.error(traceback.format_exc())
         telegramSender.send('😭에러발생\n' + str(e))
