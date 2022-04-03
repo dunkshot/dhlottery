@@ -49,6 +49,10 @@ def check_charge():
     login(driver)
     driver.get(prefix + '/userSsl.do?method=myPage')
 
+    element_png = driver.find_element(By.XPATH, '/html/body').screenshot_as_png
+    open('img_temp', 'wb').write(element_png)
+    telegramSender.send_img('img_temp')
+
     # 총 예치금
     deposit = driver.find_element(By.CLASS_NAME, 'total_new').find_element(By.TAG_NAME, 'strong').text
 
