@@ -66,7 +66,7 @@ def buy():
     driver = init_driver()
     login(driver)
 
-    driver.get(prefix + 'common.do?method=main')
+    driver.get(prefix + '/common.do?method=main')
     time.sleep(2)
     send_screenshot(driver)
 
