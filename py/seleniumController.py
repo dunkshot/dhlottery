@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
@@ -64,6 +66,7 @@ def buy():
     driver = init_driver()
     login(driver)
 
+    time.sleep(2)
     send_screenshot(driver)
 
     driver.find_element(By.XPATH, "//a[@href='javascript:void(0)']").click()
