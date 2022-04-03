@@ -148,6 +148,12 @@ def init_driver():
     chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36')
     chrome_options.add_argument('sec-ch-ua-mobile=?0')
     driver = webdriver.Chrome(options=chrome_options)
+
+    # 동행복권은 js로 navigator.platform 을 체크하여 모바일 디바이스를 판단한다.
+    # 때문에 아래 filter 화이트 리스트 중 하나로 platform override 가 필요하다.
+    # filter = 'win16|win32|win64|macintel';
+    driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": "python 2.7", "platform": "win64"})
+
     driver.set_window_position(0, 0)
     driver.set_window_size(1400, 900)
 
