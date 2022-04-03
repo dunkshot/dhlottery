@@ -140,7 +140,8 @@ def init_driver():
     chrome_options.headless = is_headless
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    # chrome_options.add_argument('--remote-debugging-port=9222')
+    chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36')
+    chrome_options.add_argument('sec-ch-ua-mobile=?0')
     driver = webdriver.Chrome(options=chrome_options)
     driver.set_window_position(0, 0)
     driver.set_window_size(1400, 900)
