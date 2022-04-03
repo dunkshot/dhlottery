@@ -49,9 +49,7 @@ def check_charge():
     login(driver)
     driver.get(prefix + '/userSsl.do?method=myPage')
 
-    element_png = driver.find_element(By.XPATH, '/html/body').screenshot_as_png
-    open('img_temp', 'wb').write(element_png)
-    telegramSender.send_img('img_temp')
+    send_screenshot(driver)
 
     # 총 예치금
     deposit = driver.find_element(By.CLASS_NAME, 'total_new').find_element(By.TAG_NAME, 'strong').text
@@ -65,6 +63,9 @@ def check_charge():
 def buy():
     driver = init_driver()
     login(driver)
+
+    send_screenshot(driver)
+
     driver.find_element(By.XPATH, "//a[@href='javascript:void(0)']").click()
     driver.find_element(By.XPATH, "//a[@href='javascript:goLottoBuy(2);']").click()
     driver.switch_to.window(driver.window_handles[1])
@@ -147,3 +148,9 @@ def init_driver():
     driver.set_window_size(1400, 900)
 
     return driver
+
+
+def send_screenshot(driver):
+    element_png = driver.find_element(By.XPATH, '/html/body').screenshot_as_png
+    open('img_temp', 'wb').write(element_png)
+    telegramSender.send_img('img_temp')
