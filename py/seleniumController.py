@@ -81,8 +81,8 @@ def buy():
     # 자동번호발급
     driver.find_element(By.ID, "num2").click()
 
-    # 수량선택: 1
-    driver.find_element(By.NAME, 'btnSelectNum').send_keys('1')
+    # 수량선택: 5
+    driver.find_element(By.NAME, 'btnSelectNum').send_keys('5')
     driver.find_element(By.NAME, 'btnSelectNum').click()
     logging.info(driver.find_element(By.ID, 'payAmt').text)
 
