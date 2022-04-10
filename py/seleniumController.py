@@ -66,13 +66,10 @@ def buy():
     driver = init_driver()
     login(driver)
 
-    driver.get(prefix + '/common.do?method=main')
-    time.sleep(2)
-    send_screenshot(driver)
-
-    driver.find_element(By.XPATH, "//a[@href='javascript:void(0)']").click()
-    driver.find_element(By.XPATH, "//a[@href='javascript:goLottoBuy(2);']").click()
-    driver.switch_to.window(driver.window_handles[1])
+    # 모바일버전 접속을 피하려면 URL 직접 접속해야 함
+    # 홈피 메뉴로 구매 접속시 팝업창으로 진입하이여 모바일 버전이 뜸
+    # 팝업창은 기존 크롬 초기화 설정내용이 적용되지 않는 듯
+    driver.get('https://el.dhlottery.co.kr/game/TotalGame.jsp?LottoId=LO40')
 
     # 창내 팝업 핸들링
     if driver.find_element(By.CLASS_NAME, 'popup_section').is_displayed():
