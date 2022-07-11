@@ -2,6 +2,7 @@ import traceback
 
 import telegram
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+from apscheduler.schedulers.background import BackgroundScheduler
 import seleniumController
 import telegramSender
 import loadConfig
@@ -35,12 +36,26 @@ def handler(update, context):
         telegramSender.send('😵에러발생\n' + str(e))
 
 
+def cron_buy():
+    seleniumController.buy()
+
+
 if __name__ == '__main__':
     try:
+        # start logger
         logging.basicConfig(filename='dhlottery.log', format='%(asctime)s %(levelname)7s %(message)s', level=logging.INFO)
-        logging.info('[dhlottery] Start msgHandler')
+
+        # start buy scheduler
+        sched = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 1})
+        sched.add_job(cron_buy, 'cron', day='1st fri, 2nd fri, 3rd fri, last fri', hour=19, id="job1")
+        sched.start()
+        logging.info('[dhlottery] Start BackgroundScheduler')
+
+        # start telegram message handler
         echo_handler = MessageHandler(Filters.text, handler)
         dispatcher.add_handler(echo_handler)
+        logging.info('[dhlottery] Start msgHandler')
+
     except Exception as e:
         logging.error(traceback.format_exc())
         telegramSender.send('😭에러발생\n' + str(e))
