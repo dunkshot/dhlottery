@@ -40,6 +40,10 @@ def cron_buy():
     seleniumController.buy()
 
 
+def cron_result():
+    seleniumController.check_result()
+
+
 if __name__ == '__main__':
     try:
         # start logger
@@ -48,6 +52,7 @@ if __name__ == '__main__':
         # start buy scheduler
         sched = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 1})
         sched.add_job(cron_buy, 'cron', day='1st fri, 2nd fri, 3rd fri, last fri', hour=19, id="job1")
+        sched.add_job(cron_result(), 'cron', day='1st sun, 2nd sun, 3rd sun, last sun', hour=9, id="job2")
         sched.start()
         logging.info('[dhlottery] Start BackgroundScheduler')
 
@@ -59,3 +64,4 @@ if __name__ == '__main__':
     except Exception as e:
         logging.error(traceback.format_exc())
         telegramSender.send('😭에러발생\n' + str(e))
+        print(e)
