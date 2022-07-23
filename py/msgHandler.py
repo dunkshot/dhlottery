@@ -49,12 +49,6 @@ if __name__ == '__main__':
         # start logger
         logging.basicConfig(filename='dhlottery.log', format='%(asctime)s %(levelname)7s %(message)s', level=logging.INFO)
 
-        # start buy scheduler
-        sched = BackgroundScheduler({'apscheduler.job_defaults.max_instances': 1})
-        sched.add_job(cron_buy, 'cron', day='1st fri, 2nd fri, 3rd fri, last fri', hour=19, id="job1")
-        sched.add_job(cron_result(), 'cron', day='1st sun, 2nd sun, 3rd sun, last sun', hour=9, id="job2")
-        sched.start()
-        logging.info('[dhlottery] Start BackgroundScheduler')
 
         # start telegram message handler
         echo_handler = MessageHandler(Filters.text, handler)
